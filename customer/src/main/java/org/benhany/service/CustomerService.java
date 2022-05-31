@@ -1,14 +1,13 @@
 package org.benhany.service;
 
+import org.benhany.clients.fraud.FraudClient;
+import org.benhany.clients.fraud.dto.FraudCheckResponse;
 import org.benhany.dto.CustomerRegistrationRequest;
-import org.benhany.dto.FraudCheckResponse;
 import org.benhany.model.Customer;
 import org.benhany.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -18,6 +17,9 @@ public class CustomerService {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    FraudClient fraudClient;
 
     public void registerCustomer(CustomerRegistrationRequest request){
 
@@ -29,11 +31,13 @@ public class CustomerService {
 
         customerRepository.saveAndFlush(customer);
 
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://FRAUD/api/v1/fraud/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId()
-        );
+//        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
+//                "http://FRAUD/api/v1/fraud/{customerId}",
+//                FraudCheckResponse.class,
+//                customer.getId()
+//        );
+
+        FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
 
         if (fraudCheckResponse.getIsFraudster()) throw new IllegalStateException("fraudster");
 

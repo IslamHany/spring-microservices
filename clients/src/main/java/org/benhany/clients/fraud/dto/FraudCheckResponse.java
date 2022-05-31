@@ -1,4 +1,4 @@
-package org.benhany.dto;
+package org.benhany.clients.fraud.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,3 +12,4 @@ import lombok.NoArgsConstructor;
 public class FraudCheckResponse {
     private Boolean isFraudster;
 }
+
