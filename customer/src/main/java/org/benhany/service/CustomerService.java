@@ -2,6 +2,8 @@ package org.benhany.service;
 
 import org.benhany.clients.fraud.FraudClient;
 import org.benhany.clients.fraud.dto.FraudCheckResponse;
+import org.benhany.clients.notification.NotificationClient;
+import org.benhany.clients.notification.dto.NotificationRequest;
 import org.benhany.dto.CustomerRegistrationRequest;
 import org.benhany.model.Customer;
 import org.benhany.repository.CustomerRepository;
@@ -20,6 +22,9 @@ public class CustomerService {
 
     @Autowired
     FraudClient fraudClient;
+
+    @Autowired
+    NotificationClient notificationClient;
 
     public void registerCustomer(CustomerRegistrationRequest request){
 
@@ -40,6 +45,14 @@ public class CustomerService {
         FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
 
         if (fraudCheckResponse.getIsFraudster()) throw new IllegalStateException("fraudster");
+
+        notificationClient.sendNotification(
+                NotificationRequest.builder()
+                        .toCustomerId(customer.getId())
+                        .toCustomerEmail(customer.getEmail())
+                        .message(String.format("Hello my name is %s %s", customer.getFirstName(), customer.getLastName()))
+                        .build()
+        );
 
     }
 }
