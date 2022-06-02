@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: customer
+  rabbitmq:
+    addresses: localhost:5672
   jpa:
     hibernate:
       ddl-auto: update
