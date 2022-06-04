@@ -29,6 +29,7 @@
     <spring.boot.maven.plugin.version>2.7.0</spring.boot.maven.plugin.version>
     <spring.boot.dependencies.version>2.7.0</spring.boot.dependencies.version>
     <spring.cloud-version>2021.0.3</spring.cloud-version>
+    <image>benhany/${project.artifactId}:${project.version}</image>
   </properties>
 
   <dependencyManagement>
@@ -75,6 +76,7 @@
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
@@ -82,7 +84,41 @@
           <executions>
             <execution>
               <goals>
-                <goal>repackage</goal> <!--after packaging ussing apache maven it goes back and repackage to  run spring boot application-->
+                <goal>repackage</goal> <!--after packaging u sing apache maven it goes back and repackage to  run spring boot application-->
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId><!-- mvn clean package -P build-docker-image -->
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>3.2.1</version>
+          <configuration>
+            <from>
+              <image>eclipse-temurin:8</image>
+              <platforms>
+                <platform>
+                  <architecture>arm64</architecture>
+                  <os>linux</os>
+                </platform>
+                <platform>
+                  <architecture>amd64</architecture>
+                  <os>linux</os>
+                </platform>
+              </platforms>
+            </from>
+            <to>
+              <tags>
+                <tag>latest</tag>
+              </tags>
+            </to>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>build</goal>
               </goals>
             </execution>
           </executions>

@@ -17,7 +17,8 @@ public class Notification {
     @Id
     @SequenceGenerator(
             name = "notification_id_sequence",
-            sequenceName = "notification_id_sequence"
+            sequenceName = "notification_id_sequence",
+            allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
