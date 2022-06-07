@@ -1,0 +1,8 @@
+$ mvn clean package -P build-docker-image //package jars and push the new images to dockerhub
+$ docker compose pull // pull new images for compose file
+$ docker compose up -d // to run the docker compose file
+$ docker compose ps
+
+$ kubectl apply -f
+$ kubectl port-forward <pod name> p:p
+$ kubectl logs <service name>

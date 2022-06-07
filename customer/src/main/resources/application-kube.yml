@@ -1,9 +1,9 @@
 server:
-  port: 8082
+  port: 8080
 
 spring:
   application:
-    name: notification
+    name: customer
   zipkin:
     base-url: http://zipkin:9411
   rabbitmq:
@@ -18,19 +18,11 @@ spring:
     show-sql: true
   datasource:
     password: 12345
-    url: jdbc:postgresql://postgres:5432/notification
-    username: islam
+    url: jdbc:postgresql://postgres:5432/customer
+    username: benhany
 
 eureka:
   client:
     service-url:
       defaultZone: http://eureka-server:8761/eureka
     enabled: false
-
-rabbitmq:
-  exchanges:
-    internal: internal.exchange
-  queues:
-    notification: notification.queue
-  routing-keys:
-    internal-notification: internal.notification.routing-key
