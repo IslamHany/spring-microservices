@@ -1,8 +1,17 @@
 $ mvn clean package -P build-docker-image //package jars and push the new images to dockerhub
 $ docker compose pull // pull new images for compose file
 $ docker compose up -d // to run the docker compose file
+$ docker compose down
 $ docker compose ps
 
-$ kubectl apply -f
+$ kubectl apply -f <folder containing the yml files>
 $ kubectl port-forward <pod name> p:p
+$ kubectl scale --replicas=0 deployment <depl name> //make 0 replicas of your deployment
+$ kubectl exec -it <pod name>
+$ kubectl exec -it postgres-0 -- psql -U <db username> //open psql terminal inside the pod
 $ kubectl logs <service name>
+$ kubectl describe pod <pod name>
+$ kubectl get pods
+$ kubectl get svc // get services
+
+$ sudo minikube tunnel //access load balancer services in the browser or outside the cluster on port 80

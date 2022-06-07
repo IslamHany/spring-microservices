@@ -19,7 +19,7 @@ spring:
   datasource:
     password: 12345
     url: jdbc:postgresql://postgres:5432/notification
-    username: islam
+    username: benhany
 
 eureka:
   client:
